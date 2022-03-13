@@ -8,27 +8,9 @@ var lowerCaseInput = null;
 var upperCaseInput = null;
 var numericCharInput = null;
 var specialCharInput = null;
-//initiate list of password criteria 
+//initiate list of password criteria
+// will contain true/false values whether criteria is requried
 var criteriaArray = [];
-// Assignment Code
-var generateBtn = document.querySelector("#generate"); // returns first element with id="generate"
-
-// Write password to the #password input
-function writePassword() {
-  
-  var password = generatePassword(); // calls generatePassword() function and assigns a value to password variable
-  var passwordText = document.querySelector("#password"); // find element using selector #password
-
-  passwordText.value = password; // assign that element a value of password
-
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-
-
-
-
 
 // function that prompts user for length of password and returns true if input is valid
 function passwordLength () {
@@ -101,7 +83,7 @@ function specialCharCheck() {
 
 // function that checks at least one character type is selected
 function passwordCriteriaDefined() {
-  // add my criteria to the array
+  // add my criteria to the array to keep track of which ones are true
   criteriaArray.push(passwordLength());
   criteriaArray.push(lowerCaseCheck());
   criteriaArray.push(upperCaseCheck());
@@ -119,49 +101,69 @@ function passwordCriteriaDefined() {
 }
 
 // generate a random number to choose which position in the criteriaArray i will choose the next character
-// only ouputs 1 through 4 for index of lowerCaseCheck, upperCaseCheck, numericCharCheck, specialCharCheck
 function randomNumber (min, max) {
   return Math.floor(Math.random() * (max-min)) + min;
 }
-
 // function that returns a random lowercase letter
 function randomLowerCase() {
   var lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
   return lowerCaseLetters[randomNumber(1,26)];
 }
-
 // function that returns a random number between 0 - 9
 function randomDigit() {
-  return randomNumber(0,10);
+  return randomNumber(0,9);
 }
 // function that returns a random uppercase letter
 function randomUpperCase() {
   var upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   return upperCaseLetters[randomNumber(1,26)];
 }
-
 // function that returns a random special character
 function randomSpecialChar() {
   var specialChars = "!'\"#$%&()*+,-.:;<=>?@[\\]^_`{}|~";
   return specialChars[randomNumber(1,31)];
 }
 
-// Generate password function that returns a password that meets all criteria
+// Generate password function that returns a password that meets all criteria.
+// for this to work, 1 corresponds to the lowercase criteria, 2 corresponds to the uppercase
+// criteria, 3 corresponds to the numeric criteria, 4 corresponds to the special char crit.
 function generatePassword() {
   passwordCriteriaDefined();
+  console.log(criteriaArray);
   var generatedPassword = "";
-  for (var i = 0; i < userPasswordLength; i++) {
-    var pickAChar = randomDigit();
+  while (generatedPassword.length < userPasswordLength) {
+    // randomly choose which index of the criteria array then
+    // check if that element in the array is true
+    var pickAChar = randomNumber(1,4);
     if (pickAChar === 1 && criteriaArray[1]===true) {
       generatedPassword += randomLowerCase();
     } else if (pickAChar === 2 && criteriaArray[2]===true) {
       generatedPassword += randomUpperCase();
     } else if (pickAChar === 3 && criteriaArray[3] === true) {
-      generatedPassword += randomNumber();
+      generatedPassword += randomDigit();
     } else if (pickAChar === 4 && criteriaArray[4] === true){
       generatedPassword += randomSpecialChar;
+    } else {
+      generatedPassword += "";
     }
   }
   console.log(generatedPassword);
+  criteriaArray = [];
   return generatedPassword;
 }
+
+// Assignment Code
+var generateBtn = document.querySelector("#generate"); // returns first element with id="generate"
+
+// Write password to the #password input
+function writePassword() {
+  
+  var password = generatePassword(); // calls generatePassword() function and assigns a value to password variable
+  var passwordText = document.querySelector("#password"); // find element using selector #password
+
+  passwordText.value = password; // assign that element a value of password
+
+}
+
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
