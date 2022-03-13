@@ -2,8 +2,14 @@
 //var element = document.getElementById("main-title");
 //element.innerHTML = "not a Password Generator";
 
+// initiate values for inputs to be globally
 var userPasswordLength = null;
-
+var lowerCaseInput = null;
+var upperCaseInput = null;
+var numericCharInput = null;
+var specialCharInput = null;
+//initiate list of password criteria 
+var criteriaArray = [];
 // Assignment Code
 var generateBtn = document.querySelector("#generate"); // returns first element with id="generate"
 
@@ -22,11 +28,7 @@ generateBtn.addEventListener("click", writePassword);
 
 
 
-// function that generates prompts for password criteria
-function passwordCriteriaProcess() {
-  console.log("This password meets the criteria!");
-  //
-}
+
 
 // function that prompts user for length of password and returns true if input is valid
 function passwordLength () {
@@ -43,7 +45,7 @@ function passwordLength () {
 
 // function that prompts user for lowercase requirement and returns true if input is valid
 function lowerCaseCheck() {
-  var lowerCaseInput = window.prompt("Are you required to have lowercase letters? Enter Y for YES and N for NO.");
+  lowerCaseInput = window.prompt("Do you need lowercase letters? Enter Y for YES and N for NO.");
   // validate response
   if (lowerCaseInput === "Y") {
     return true;
@@ -57,25 +59,67 @@ function lowerCaseCheck() {
 
 // function that prompts user for uppercase requirement and returns true if input is valid
 function upperCaseCheck() {
-  
-
+  upperCaseInput = window.prompt("Do you need any uppcase letters? Enter Y for YES and N for NO.");
+  // validate response
+  if (upperCaseInput === "Y") {
+    return true;
+  } else if (upperCaseInput === "N") {
+    return false;
+  } else {
+      window.alert("That response was not valid!");
+      upperCaseCheck();// recursively call this function until response is valid
+  }
 }
 
-// function that prompts user for lowercase, uppercase, numeric and/or special characters
-// function chooseCharacterTypes() {
-//   // validate at least one character type was selected
-//   var typesArray = [];
+// function that prompts user for numeric character requirement and returns true if input is valid
+function numericCharCheck() {
+  numericCharInput = window.prompt("Do you need any numeric characters? Enter Y for YES and N for NO.");
+  // validate response
+  if (numericCharInput === "Y") {
+    return true;
+  } else if (numericCharInput === "N") {
+    return false;
+  } else {
+      window.alert("That response was not valid!");
+      numericCharCheck();// recursively call this function until response is valid
+  }
+}
 
-//   var upperCaseInput = window.prompt("Are you required to have uppercase letters? Enter Y for YES and N for NO." );
+// function that prompts user for special character requirement and returns true if input is valid
+function specialCharCheck() {
+  specialCharInput = window.prompt("Do you need any special characters? Enter Y for YES and N for NO.");
+  // validate response
+  if (specialCharInput === "Y") {
+    return true;
+  } else if (specialCharInput === "N") {
+    return false;
+  } else {
+      window.alert("That response was not valid!");
+      specialCharCheck();// recursively call this function until response is valid
+  }
+}
 
-//   var numericInput = window.prompt("Are you required to have numeric characters? Enter Y for YES and N for NO.");
-
-//   var specialCharInput = window.prompt("Are you required to have special characters? Enter Y for YES and N for NO.");
-
-// }
+// function that checks at least one character type is selected
+function passwordCriteriaDefined() {
+  // add my criteria to the array
+  criteriaArray.push(passwordLength());
+  criteriaArray.push(lowerCaseCheck());
+  criteriaArray.push(upperCaseCheck());
+  criteriaArray.push(numericCharCheck());
+  criteriaArray.push(specialCharCheck());
+  // check if one of them is true, starting at the second criteria because PWlength will always be within valid at this point
+  for (var i = 1; i < criteriaArray.length; i++) {
+    if (criteriaArray[i]) {
+      return true;
+    }
+  }
+  // if none were true, repeat the cycle until one of them is true
+  window.alert("One of the criteria must be required to generate a secure password.");
+  passwordCriteriaDefined();
+}
 
 // Generate password function that returns a password that meets all criteria
 function generatePassword() {
-  return passwordLength();
-
+  passwordCriteriaDefined();
+  
 }
