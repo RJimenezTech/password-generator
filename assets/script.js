@@ -1,17 +1,6 @@
-// dummy steps to change the title of the doc
-//var element = document.getElementById("main-title");
-//element.innerHTML = "not a Password Generator";
-
-// initiate values for inputs to be globally
-var userPasswordLength = null;
-var lowerCaseInput = null;
-var upperCaseInput = null;
-var numericCharInput = null;
-var specialCharInput = null;
 //initiate list of password criteria
 // will contain true/false values whether criteria is requried
 var criteriaArray = [];
-
 // function that prompts user for length of password and returns true if input is valid
 function passwordLength () {
   // assign global variable "userPasswordLength" the input value from user
@@ -24,10 +13,9 @@ function passwordLength () {
     passwordLength(); // recursively call this function until length is acceptable
   }
 }
-
 // function that prompts user for lowercase requirement and returns true if input is valid
 function lowerCaseCheck() {
-  lowerCaseInput = window.prompt("Do you need lowercase letters? Enter Y for YES and N for NO.");
+  var lowerCaseInput = window.prompt("Do you need lowercase letters? Enter Y for YES and N for NO.");
   // validate response
   if (lowerCaseInput === "Y") {
     return true;
@@ -38,10 +26,9 @@ function lowerCaseCheck() {
       lowerCaseCheck();// recursively call this function until response is valid
   }
 }
-
 // function that prompts user for uppercase requirement and returns true if input is valid
 function upperCaseCheck() {
-  upperCaseInput = window.prompt("Do you need any uppcase letters? Enter Y for YES and N for NO.");
+  var upperCaseInput = window.prompt("Do you need any uppcase letters? Enter Y for YES and N for NO.");
   // validate response
   if (upperCaseInput === "Y") {
     return true;
@@ -52,10 +39,9 @@ function upperCaseCheck() {
       upperCaseCheck();// recursively call this function until response is valid
   }
 }
-
 // function that prompts user for numeric character requirement and returns true if input is valid
 function numericCharCheck() {
-  numericCharInput = window.prompt("Do you need any numeric characters? Enter Y for YES and N for NO.");
+  var numericCharInput = window.prompt("Do you need any numeric characters? Enter Y for YES and N for NO.");
   // validate response
   if (numericCharInput === "Y") {
     return true;
@@ -66,10 +52,9 @@ function numericCharCheck() {
       numericCharCheck();// recursively call this function until response is valid
   }
 }
-
 // function that prompts user for special character requirement and returns true if input is valid
 function specialCharCheck() {
-  specialCharInput = window.prompt("Do you need any special characters? Enter Y for YES and N for NO.");
+  var specialCharInput = window.prompt("Do you need any special characters? Enter Y for YES and N for NO.");
   // validate response
   if (specialCharInput === "Y") {
     return true;
@@ -80,7 +65,6 @@ function specialCharCheck() {
       specialCharCheck();// recursively call this function until response is valid
   }
 }
-
 // function that checks at least one character type is selected
 function passwordCriteriaDefined() {
   // add my criteria to the array to keep track of which ones are true
@@ -99,10 +83,9 @@ function passwordCriteriaDefined() {
   window.alert("One of the criteria must be required to generate a secure password.");
   passwordCriteriaDefined();
 }
-
 // generate a random number to choose which position in the criteriaArray i will choose the next character
 function randomNumber (min, max) {
-  return Math.floor(Math.random() * (max-min)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 // function that returns a random lowercase letter
 function randomLowerCase() {
@@ -123,32 +106,28 @@ function randomSpecialChar() {
   var specialChars = "!'\"#$%&()*+,-.:;<=>?@[\\]^_`{}|~";
   return specialChars[randomNumber(1,31)];
 }
-
 // Generate password function that returns a password that meets all criteria.
 // for this to work, 1 corresponds to the lowercase criteria, 2 corresponds to the uppercase
 // criteria, 3 corresponds to the numeric criteria, 4 corresponds to the special char crit.
 function generatePassword() {
   passwordCriteriaDefined();
-  console.log(criteriaArray);
   var generatedPassword = "";
   while (generatedPassword.length < userPasswordLength) {
-    // randomly choose which index of the criteria array then
-    // check if that element in the array is true
+    // randomly choose which a criteria then (1,2,3,4)
+    // check if that corresponding element in the array is true
     var pickAChar = randomNumber(1,4);
-    if (pickAChar === 1 && criteriaArray[1]===true) {
+    if (pickAChar === 1 && criteriaArray[1] === true) {
       generatedPassword += randomLowerCase();
-    } else if (pickAChar === 2 && criteriaArray[2]===true) {
+    } else if (pickAChar === 2 && criteriaArray[2] === true) {
       generatedPassword += randomUpperCase();
     } else if (pickAChar === 3 && criteriaArray[3] === true) {
       generatedPassword += randomDigit();
-    } else if (pickAChar === 4 && criteriaArray[4] === true){
-      generatedPassword += randomSpecialChar;
+    } else if (pickAChar === 4 && criteriaArray[4] === true) {
+      generatedPassword += randomSpecialChar();
     } else {
       generatedPassword += "";
     }
   }
-  console.log(generatedPassword);
-  criteriaArray = [];
   return generatedPassword;
 }
 
