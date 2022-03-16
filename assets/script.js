@@ -17,9 +17,9 @@ function passwordLength () {
 function lowerCaseCheck() {
   var lowerCaseInput = window.prompt("Do you need lowercase letters? Enter Y for YES and N for NO.");
   // validate response
-  if (lowerCaseInput === "Y") {
+  if (lowerCaseInput === "Y" || lowerCaseInput === "y") {
     return true;
-  } else if (lowerCaseInput === "N") {
+  } else if (lowerCaseInput === "N" || lowerCaseInput === "n") {
     return false;
   } else {
       window.alert("That response was not valid!");
@@ -30,9 +30,9 @@ function lowerCaseCheck() {
 function upperCaseCheck() {
   var upperCaseInput = window.prompt("Do you need any uppcase letters? Enter Y for YES and N for NO.");
   // validate response
-  if (upperCaseInput === "Y") {
+  if (upperCaseInput === "Y" || upperCaseInput === "y") {
     return true;
-  } else if (upperCaseInput === "N") {
+  } else if (upperCaseInput === "N" || upperCaseInput === "n") {
     return false;
   } else {
       window.alert("That response was not valid!");
@@ -43,9 +43,9 @@ function upperCaseCheck() {
 function numericCharCheck() {
   var numericCharInput = window.prompt("Do you need any numeric characters? Enter Y for YES and N for NO.");
   // validate response
-  if (numericCharInput === "Y") {
+  if (numericCharInput === "Y" || numericCharInput === "y") {
     return true;
-  } else if (numericCharInput === "N") {
+  } else if (numericCharInput === "N" || numericCharInput === "n") {
     return false;
   } else {
       window.alert("That response was not valid!");
@@ -56,9 +56,9 @@ function numericCharCheck() {
 function specialCharCheck() {
   var specialCharInput = window.prompt("Do you need any special characters? Enter Y for YES and N for NO.");
   // validate response
-  if (specialCharInput === "Y") {
+  if (specialCharInput === "Y" || specialCharInput === "y") {
     return true;
-  } else if (specialCharInput === "N") {
+  } else if (specialCharInput === "N" || specialCharInput === "n") {
     return false;
   } else {
       window.alert("That response was not valid!");
@@ -130,19 +130,13 @@ function generatePassword() {
   }
   return generatedPassword;
 }
-
 // Assignment Code
 var generateBtn = document.querySelector("#generate"); // returns first element with id="generate"
-
 // Write password to the #password input
 function writePassword() {
-  
   var password = generatePassword(); // calls generatePassword() function and assigns a value to password variable
   var passwordText = document.querySelector("#password"); // find element using selector #password
-
   passwordText.value = password; // assign that element a value of password
-
 }
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
