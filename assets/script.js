@@ -17,6 +17,7 @@ function passwordLength () {
 function lowerCaseCheck() {
   var lowerCaseInput = window.prompt("Do you need lowercase letters? Enter Y for YES and N for NO.");
   // validate response
+  console.log(lowerCaseInput);
   if (lowerCaseInput === "Y" || lowerCaseInput === "y") {
     return true;
   } else if (lowerCaseInput === "N" || lowerCaseInput === "n") {
