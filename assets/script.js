@@ -114,8 +114,23 @@ function generatePassword() {
   passwordCriteriaDefined();
   var generatedPassword = "";
   while (generatedPassword.length < userPasswordLength) {
-    // randomly choose which a criteria then (1,2,3,4)
-    // check if that corresponding element in the array is true
+    // these statements ensure that at least 1 character of each required type 
+    // is found and appended to password
+    if (criteriaArray[1] === true) {
+      generatedPassword += randomLowerCase();
+    }
+    if (criteriaArray[2] === true) {
+      generatedPassword += randomUpperCase();
+    }
+    if (criteriaArray[3] === true) {
+      generatedPassword += randomDigit();
+    }
+    if (criteriaArray[4] === true) {
+      generatedPassword += randomSpecialChar();
+    }
+    // randomly choose which a criteria (1,2,3,4) then 
+    // check if that corresponding element in the criteria 
+    // array is true
     var pickAChar = randomNumber(1,4);
     if (pickAChar === 1 && criteriaArray[1] === true) {
       generatedPassword += randomLowerCase();
